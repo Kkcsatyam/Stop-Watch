@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        height: 350px;
+        width: 400px;
+        background-color: black;
+        display: flex;
+        margin-left: 40%;
+        margin-top: 10%;
+        color: aliceblue;
+        flex-direction: column;
+        border-radius: 12px;
+        justify-content: space-evenly;
+      }
+      .heading{
+        display: flex;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .input {
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .start{
+        background-color: blue;
+        color: azure;
+        width: 70px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 25px;
+
+      }
+      .stop{
+        background-color: brown;
+        color: azure;
+        width: 70px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 25px;
+      }
+      .reset{
+        background-color: rgb(79, 48, 11);
+        color: azure;
+        width: 70px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <h4 class="heading">Stop Watch</h4>
+      <div class="input">00:00:00:00</div>
+      <div class="buttons">
+          <button class="start" onclick="startWatch()">Start</button>
+        
+          <button class="stop" onclick="stopWatch()">Stop</button>
+        
+          <button class="reset" onclick="ResetWatch()">Reset</button>
+        
+      </div>
+      <script>
+        let hr = 0;
+        let min = 0;
+        let sec = 0;
+        let ms = 0;
+        let timer;
+        let isRunning = false;
+        function updateDisplay() {
+          document.querySelector(".input").innerText = `${String(hr).padStart(
+            2,
+            "0"
+          )}:${String(min).padStart(2, "0")}:${String(sec).padStart(
+            2,
+            "0"
+          )}:${String(ms).padStart(2, "0")}`;
+        }
+
+        function startWatch() {
+          if (!isRunning) {
+            isRunning = true;
+            timer = setInterval(() => {
+              ms++;
+              if (ms === 100) {
+                ms = 0;
+                sec++;
+                if (sec === 60) {
+                  sec = 0;
+                  min++;
+                  if (min === 60) {
+                    min = 0;
+                    hr++;
+                  }
+                }
+              }
+
+              updateDisplay();
+            }, 10);
+          }
+        }
+        function stopWatch() {
+          isRunning = false;
+          clearInterval(timer);
+        }
+        function ResetWatch() {
+          startWatch();
+          sec = 0;
+          min = 0;
+          hr = 0;
+          updateDisplay();
+        }
+      </script>
+    </div>
+  </body>
+</html>
